@@ -1,0 +1,11 @@
+{
+  "name": "gql-demo",
+  "version": "1.0.0",
+  "description": "graphQL educational purpose app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "mlnkv",
+  "license": "ISC"
+}
