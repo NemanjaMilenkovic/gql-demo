@@ -1,6 +1,5 @@
-// import { gql } from 'apollo-boost';
-// import { graphql } from 'react-apollo';
 import { useQuery, gql } from '@apollo/client';
+import Book from './Book';
 
 const getBooksQuery = gql`
 	query getBooks {
@@ -10,14 +9,23 @@ const getBooksQuery = gql`
 		}
 	}
 `;
-
 function BookList() {
-	const { name } = useQuery(getBooksQuery);
-	console.log(name);
+	const data = useQuery(getBooksQuery);
+
 	return (
 		<div className="main">
 			<ul id="book-list">
-				<li>Book Name</li>
+				<Book
+					book={
+						data.loading ? (
+							<div>Loading books...</div>
+						) : (
+							data.data.books.map((book) => {
+								return <li key={book.id}>{book.name}</li>;
+							})
+						)
+					}
+				/>
 			</ul>
 		</div>
 	);
