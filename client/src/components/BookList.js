@@ -3,7 +3,7 @@
 import { useQuery, gql } from '@apollo/client';
 
 const getBooksQuery = gql`
-	{
+	query getBooks {
 		books {
 			name
 			id
