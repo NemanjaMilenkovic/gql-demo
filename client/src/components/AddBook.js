@@ -1,12 +1,5 @@
-import { useQuery, gql } from '@apollo/client';
-
-const getAuthorsQuery = gql`
-	query getAuthors {
-		authors {
-			name
-		}
-	}
-`;
+import { useQuery } from '@apollo/client';
+import { getAuthorsQuery } from '../queries/queries';
 
 function AddBook() {
 	const data = useQuery(getAuthorsQuery);
@@ -29,7 +22,11 @@ function AddBook() {
 					{data.loading
 						? null
 						: data.data.authors.map((author) => {
-								return <option key={author.id}>{author.name}</option>;
+								return (
+									<option key={author.id} value={author.id}>
+										{author.name}
+									</option>
+								);
 						  })}
 				</select>
 			</div>
