@@ -11,7 +11,6 @@ const getBooksQuery = gql`
 `;
 function BookList() {
 	const data = useQuery(getBooksQuery);
-
 	return (
 		<div className="main">
 			<ul id="book-list">
