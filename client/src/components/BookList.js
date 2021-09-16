@@ -25,6 +25,7 @@ function BookList() {
 										}}
 									>
 										{book.name}
+										<button>x</button>
 									</li>
 								);
 							})
