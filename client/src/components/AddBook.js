@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
-import { getAuthorsQuery, getBooksQuery } from '../queries/queries';
-import { addBookMutation } from '../queries/queries';
+import {
+	getAuthorsQuery,
+	getBooksQuery,
+	addBookMutation,
+} from '../queries/queries';
 
 function AddBook() {
 	const [formState, setFormState] = useState({
