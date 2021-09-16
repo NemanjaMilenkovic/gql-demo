@@ -13,6 +13,7 @@ const getAuthorsQuery = gql`
 	query getAuthors {
 		authors {
 			name
+			id
 		}
 	}
 `;
