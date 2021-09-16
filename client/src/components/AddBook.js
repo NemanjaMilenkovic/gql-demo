@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
 import {
-	getAuthorsQuery,
-	getBooksQuery,
-	addBookMutation,
+	GET_AUTHORS_QUERY,
+	GET_BOOKS_QUERY,
+	ADD_BOOK_MUTATION,
 } from '../queries/queries';
 
 function AddBook() {
@@ -13,8 +13,8 @@ function AddBook() {
 		authorId: '',
 	});
 
-	const data = useQuery(getAuthorsQuery);
-	const [addBook] = useMutation(addBookMutation);
+	const data = useQuery(GET_AUTHORS_QUERY);
+	const [addBook] = useMutation(ADD_BOOK_MUTATION);
 
 	const submitForm = (e) => {
 		e.preventDefault();
@@ -24,7 +24,7 @@ function AddBook() {
 				genre: formState.genre,
 				authorId: formState.authorId,
 			},
-			refetchQueries: [{ query: getBooksQuery }],
+			refetchQueries: [{ query: GET_BOOKS_QUERY }],
 		});
 	};
 

@@ -1,13 +1,22 @@
 import { useState } from 'react';
-import { useQuery } from '@apollo/client';
+import { useQuery, useMutation } from '@apollo/client';
 import Book from './Book';
-import { getBooksQuery } from '../queries/queries';
+import { GET_BOOKS_QUERY, DELETE_BOOK_MUTATION } from '../queries/queries';
 import BookDetails from './BookDetails';
 
 function BookList() {
 	const [selected, setSelected] = useState(null);
-	const data = useQuery(getBooksQuery);
+	const data = useQuery(GET_BOOKS_QUERY);
+	const [deleteBook] = useMutation(DELETE_BOOK_MUTATION);
 
+	const onDelete = (bookId) => {
+		deleteBook({
+			variables: {
+				id: bookId,
+			},
+			refetchQueries: [{ query: GET_BOOKS_QUERY }],
+		});
+	};
 	return (
 		<div className="main">
 			<ul id="book-list">
@@ -25,7 +34,13 @@ function BookList() {
 										}}
 									>
 										{book.name}
-										<button>x</button>
+										<button
+											onClick={() => {
+												onDelete(book.id);
+											}}
+										>
+											x
+										</button>
 									</li>
 								);
 							})

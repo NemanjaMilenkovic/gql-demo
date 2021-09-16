@@ -1,11 +1,9 @@
 import { useQuery } from '@apollo/client';
-import { useState } from 'react';
-
-import { getBookQuery } from '../queries/queries';
+import { GET_BOOK_QUERY } from '../queries/queries';
 
 function BookDetails(props) {
 	const bookId = props.bookId;
-	const book = useQuery(getBookQuery, {
+	const book = useQuery(GET_BOOK_QUERY, {
 		variables: {
 			id: bookId,
 		},
