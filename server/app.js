@@ -9,7 +9,8 @@ const app = express();
 app.use(cors());
 app.use('/graphql', graphqlHTTP({ schema, graphiql: true }));
 
-const uri = 'mongodb://localhost:27017/gql-demo';
+const uri =
+	'mongodb+srv://user:gKt0wGWik1dkv1u7@cluster0.ncm9r.mongodb.net/gql-demo?retryWrites=true&w=majority';
 
 mongoose
 	.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })

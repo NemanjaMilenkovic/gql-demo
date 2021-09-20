@@ -11,7 +11,6 @@ function BookDetails(props) {
 
 	function displayBookDetails() {
 		if (book.data && book.data.book) {
-			console.log(book.data.book.name);
 			return (
 				<div>
 					<h3>
@@ -33,6 +32,12 @@ function BookDetails(props) {
 						))}
 					</ul>
 				</div>
+			);
+		} else if (props.bookId) {
+			return (
+				<h4>
+					<div>Loading book details...</div>
+				</h4>
 			);
 		}
 	}
