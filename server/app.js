@@ -1,4 +1,5 @@
 const express = require('express');
+require('dotenv').config();
 const { graphqlHTTP } = require('express-graphql');
 const schema = require('./schema/schema');
 const mongoose = require('mongoose');
@@ -8,9 +9,8 @@ const app = express();
 
 app.use(cors());
 app.use('/graphql', graphqlHTTP({ schema, graphiql: true }));
-
-const uri =
-	'mongodb+srv://user:gKt0wGWik1dkv1u7@cluster0.ncm9r.mongodb.net/gql-demo?retryWrites=true&w=majority';
+console.log(process.env.MONGODB_USERNAME);
+const uri = `mongodb+srv://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@cluster0.ncm9r.mongodb.net/gql-demo?retryWrites=true&w=majority`;
 
 mongoose
 	.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
