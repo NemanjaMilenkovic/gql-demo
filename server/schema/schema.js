@@ -12,6 +12,13 @@ const {
 	GraphQLNonNull,
 } = graphql;
 
+const admin = require('firebase-admin');
+const serviceAccount = require('../service_account.json');
+
+admin.initializeApp({
+	credential: admin.credential.cert(serviceAccount),
+});
+
 const BookType = new GraphQLObjectType({
 	name: 'Book',
 	fields: () => ({
@@ -35,8 +42,18 @@ const AuthorType = new GraphQLObjectType({
 		age: { type: GraphQLInt },
 		books: {
 			type: new GraphQLList(BookType),
-			resolve(parent, args) {
-				return Book.find({ authorId: parent.id });
+			async resolve(parent, args) {
+				console.log(parent);
+				const booksRef = await admin.firestore().collection('books');
+				const booksSnap = await booksRef
+					.where('authorId', '==', parent.id)
+					.get()
+					.then((snap) => {
+						snap.forEach((doc) => {
+							console.log(doc.id);
+						});
+					});
+				return booksSnap.docs.map((book) => book.data());
 			},
 		},
 	}),
@@ -59,20 +76,25 @@ const RootQuery = new GraphQLObjectType({
 			args: {
 				id: { type: GraphQLID },
 			},
-			resolve(parent, args) {
-				return Author.findById(args.id);
+			async resolve(parent, args) {
+				const authors = await admin.firestore().doc(`authors/${args.id}`).get();
+				return authors.docs.map((author) => author.data());
+				// return Author.findById(args.id);
 			},
 		},
 		books: {
 			type: new GraphQLList(BookType),
-			resolve(parent, args) {
-				return Book.find({});
+			async resolve(parent, args) {
+				const books = await admin.firestore().collection('books').get();
+				return books.docs.map((book) => book.data());
 			},
 		},
 		authors: {
 			type: new GraphQLList(AuthorType),
-			resolve(parent, args) {
-				return Author.find({});
+			async resolve(parent, args) {
+				const authors = await admin.firestore().collection('authors').get();
+				return authors.docs.map((author) => author.data());
+				// return Author.find({});
 			},
 		},
 	},
